@@ -18,8 +18,15 @@
     align-items: center;
 }
 
+header {
+    border-bottom: 1px dotted darkgrey;
+}
+
 nav {
     padding: 20px;
-    border-top: 1px dotted darkgrey;
     border-bottom: 1px dotted darkgrey;
+}
+
+section {
+    margin-top: 10px;
 }
