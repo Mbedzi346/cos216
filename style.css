@@ -1,0 +1,25 @@
+.flex-grid {
+    display: flex;
+}
+
+.col {
+    flex: 1;
+}
+
+.flex-align-top {
+    align-items: flex-start;
+}
+
+.flex-align-bottom {
+    align-items: flex-end;
+}
+
+.flex-align-center {
+    align-items: center;
+}
+
+nav {
+    padding: 20px;
+    border-top: 1px dotted darkgrey;
+    border-bottom: 1px dotted darkgrey;
+}
