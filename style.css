@@ -41,3 +41,11 @@ section {
     padding: 10px;
     margin: 5px;
 }
+
+.currency-logo {
+    width: 45px;
+}
+
+td {
+    text-align: center;
+}
