@@ -30,3 +30,8 @@ nav {
 section {
     margin-top: 10px;
 }
+
+.code {
+    background: #eeeeee;
+    color: green;
+}
