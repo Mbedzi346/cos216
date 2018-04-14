@@ -39,10 +39,9 @@ function sendReq(url, callbackFunction) {
     }
 
     xmlhttp.onreadystatechange = function() {
-        console.log(xmlhttp.readyState + '|'+ url);
         if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
             if (callbackFunction) callbackFunction(xmlhttp.responseText);
-       }
+        }
     };
 
     xmlhttp.open("GET", url, false);
@@ -66,6 +65,25 @@ function fetchExchangeRate() {
     });
 }
 
+function fetchAveragePrice() {
+    window.theData.forEach(function (value) {
+
+        // this is super hacky and shouldn't be done :D
+        if (value.symbol === 'MIOTA')
+            value.symbol = 'IOT';
+        else if (value.symbol === 'USDT')
+            value.symbol = 'TUSD';
+
+        sendReq('https://api.cryptonator.com/api/ticker/'+value.symbol+'-usd', function (res) {
+            value['avg_price1'] = JSON.parse(res).ticker.price;
+        });
+
+        sendReq('https://min-api.cryptocompare.com/data/price?fsym='+value.symbol+'&tsyms=USD', function (res) {
+            value['avg_price2'] = JSON.parse(res).USD;
+        });
+    });
+}
+
 function setData () {
     window.theData.forEach(function (value) {
         data.push({
@@ -74,7 +92,9 @@ function setData () {
             marketCap: value.market_cap_usd,
             price: roundToTwo((value.price_usd*window.exchangeRate)),
             volume: value['24h_volume_usd'],
-            fullDayChange: value.percent_change_24h
+            fullDayChange: value.percent_change_24h,
+            avg_price1: roundToTwo(value.avg_price1*window.exchangeRate),
+            avg_price2: roundToTwo(value.avg_price2*window.exchangeRate)
         });
     });
 }
@@ -87,17 +107,24 @@ function loadTable () {
 
         tr.innerHTML += '<td><img src="'+value.logo+'" class="currency-logo"/></td>';
         tr.innerHTML += "<td>"+value.name+"</td>";
-        tr.innerHTML += "<td>"+value.market_cap+" USD</td>";
+        tr.innerHTML += "<td>"+value.marketCap+" USD</td>";
         tr.innerHTML += "<td>"+value.price+"</td>";
-        tr.innerHTML += "<td>"+parseFloat('00.00')+"</td>";
+        tr.innerHTML += "<td>"+roundToTwo(computeAvg(value.price, value.avg_price1, value.avg_price2))+"</td>";
         tr.innerHTML += "<td>"+value.volume+"</td>";
         tr.innerHTML += "<td>"+value.fullDayChange+" %</td>";
         currencyTable.appendChild(tr);
     });
 }
 
+function computeAvg(p1, p2, p3) {
+    if (isNaN(p2) || isNaN(p3))
+        return p1;
+
+    return ((p1 + p2 + p3) / 3);
+}
+
 fetchExchangeRate();
 fetchData();
+fetchAveragePrice();
 setData();
-
 loadTable();
