@@ -57,6 +57,7 @@ function fetchAveragePrice() {
 }
 
 function setData () {
+    data = [];
     window.theData.forEach(function (value) {
         data.push({
             logo: "https://chasing-coins.com/api/v1/std/logo/"+value.symbol,
@@ -73,8 +74,7 @@ function setData () {
 
 function loadTable () {
     var currencyTable = document.getElementById('currencyTable');
-
-    if (currencyTable.children.length > 0) currencyTable.innerHTML = '';
+    currencyTable.innerHTML = '';
 
     data.forEach(function (value) {
         var tr = document.createElement('tr');
@@ -169,11 +169,17 @@ function median(values) {
 }
 
 function loadData() {
-    fetchData();
-    fetchAveragePrice();
-    setData();
-    loadTable();
-    setStatistics();
+    document.getElementById('loader').style.visibility = 'visible';
+    document.getElementById('loader').style.display = 'block';
+
+    setTimeout(function () {
+        fetchData();
+        fetchAveragePrice();
+        setData();
+        loadTable();
+        setStatistics();
+        document.getElementById('loader').style.visibility = 'hidden';
+    }, 1000);
 }
 
 fetchExchangeRate();

@@ -73,3 +73,13 @@ td {
     top: 50%;
     right: 50%;
 }
+
+input[type="button"] {
+    background: #777777;
+    color: #f7f7f7;
+    font-weight: bold;
+}
+
+input[type="button"]:hover, input[type="button"]:active, input[type="button"]:focus {
+    background: darkgrey;
+}
