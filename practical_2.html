@@ -37,16 +37,19 @@
             <input type="text" placeholder="Search..." onkeyup="searchTable()" id="searchBox" class="col box">
         </div>
         <div class="flex-grid box">
-            <table width="100%" id="currencyTable">
-                <tr>
-                    <th>Logo</th>
-                    <th>Name</th>
-                    <th>Market Capitalization</th>
-                    <th>Price (R)</th>
-                    <th>Average Price (R)</th>
-                    <th>volume</th>
-                    <th>24/h Change</th>
-                </tr>
+            <table width="100%">
+                <thead>
+                    <tr>
+                        <th>Logo</th>
+                        <th>Name</th>
+                        <th>Market Capitalization</th>
+                        <th>Price (R)</th>
+                        <th>Average Price (R)</th>
+                        <th>volume</th>
+                        <th>24/h Change</th>
+                    </tr>
+                </thead>
+                <tbody id="currencyTable"></tbody>
             </table>
         </div>
     </section>

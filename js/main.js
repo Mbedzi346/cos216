@@ -102,6 +102,8 @@ function setData () {
 function loadTable () {
     var currencyTable = document.getElementById('currencyTable');
 
+    if (currencyTable.children.length > 0) currencyTable.innerHTML = '';
+
     data.forEach(function (value) {
         var tr = document.createElement('tr');
 
@@ -137,8 +139,10 @@ function searchTable() {
         if (td) {
             if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
                 tr[i].style.display = "";
+                setStatistics();
             } else {
                 tr[i].style.display = "none";
+                setStatistics();
             }
         }
     }
@@ -153,16 +157,21 @@ function setStatistics () {
         posCng,
         negCng;
 
-    data.forEach(function (value) {
-        sum += value.price;
-        tempPrice.push(value.price);
-        tempDayChange.push(value.fullDayChange);
-    });
+    var table = document.getElementById('currencyTable'),
+        tableTr = table.getElementsByTagName('tr');
 
-    avg = sum / 20;
-    med = median(tempPrice);
-    posCng = Math.max.apply(null, tempDayChange);
-    negCng = Math.min.apply(null, tempDayChange);
+    for (var i = 0; i < tableTr.length; i++) {
+        if (tableTr[i].style.display !== 'none') {
+            sum += parseFloat(tableTr[i].getElementsByTagName('td')[3].innerText);
+            tempPrice.push(parseFloat(tableTr[i].getElementsByTagName('td')[3].innerText));
+            tempDayChange.push(parseFloat(tableTr[i].getElementsByTagName('td')[6].innerText));
+        }
+    }
+
+    avg = (sum / 20) ? sum / 20 : 0;
+    med = (median(tempPrice)) ? median(tempPrice) : 0;
+    posCng = (isFinite(Math.max.apply(null, tempDayChange))) ? Math.max.apply(null, tempDayChange) : 0;
+    negCng = (isFinite(Math.min.apply(null, tempDayChange))) ? Math.min.apply(null, tempDayChange) : 0;
 
     var tr = document.createElement('tr');
     tr.innerHTML += "<td>"+ roundToTwo(sum) +"</td>";
@@ -170,6 +179,9 @@ function setStatistics () {
     tr.innerHTML += "<td>"+ roundToTwo(med) +"</td>";
     tr.innerHTML += "<td>"+ negCng +"</td>";
     tr.innerHTML += "<td>"+ posCng +"</td>";
+
+    if (document.getElementById('currencyStatistics').children.length > 0)
+        document.getElementById('currencyStatistics').innerHTML = "";
 
     document.getElementById('currencyStatistics').appendChild(tr);
 }
