@@ -1,31 +1,3 @@
-// for ref purposes
-var currency = {
-    logo: null,
-    name: null,
-    marketCap: null,
-    price: null,
-    avgPrice: {
-        avg: null,
-        price1: {
-            name: null,
-            url: null,
-            price: null
-        },
-        price2: {
-            name: null,
-            url: null,
-            price: null
-        },
-        price3: {
-            name: null,
-            url: null,
-            price: null
-        }
-    },
-    volume: null,
-    fullDayChange: null
-};
-
 var data = [];
 
 // https://stackoverflow.com/questions/2818648/using-two-xmlhttprequest-calls-on-a-page
@@ -155,10 +127,9 @@ function setStatistics () {
         tempPrice = [],
         tempDayChange = [],
         posCng,
-        negCng;
-
-    var table = document.getElementById('currencyTable'),
-        tableTr = table.getElementsByTagName('tr');
+        negCng,
+        tableTr = document.getElementById('currencyTable').getElementsByTagName('tr'),
+        tr = document.createElement('tr');
 
     for (var i = 0; i < tableTr.length; i++) {
         if (tableTr[i].style.display !== 'none') {
@@ -173,7 +144,6 @@ function setStatistics () {
     posCng = (isFinite(Math.max.apply(null, tempDayChange))) ? Math.max.apply(null, tempDayChange) : 0;
     negCng = (isFinite(Math.min.apply(null, tempDayChange))) ? Math.min.apply(null, tempDayChange) : 0;
 
-    var tr = document.createElement('tr');
     tr.innerHTML += "<td>"+ roundToTwo(sum) +"</td>";
     tr.innerHTML += "<td>"+ roundToTwo(avg) +"</td>";
     tr.innerHTML += "<td>"+ roundToTwo(med) +"</td>";
