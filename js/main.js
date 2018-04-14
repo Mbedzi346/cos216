@@ -144,11 +144,54 @@ function searchTable() {
     }
 }
 
+function setStatistics () {
+    var sum = 0,
+        avg,
+        med,
+        tempPrice = [],
+        tempDayChange = [],
+        posCng,
+        negCng;
+
+    data.forEach(function (value) {
+        sum += value.price;
+        tempPrice.push(value.price);
+        tempDayChange.push(value.fullDayChange);
+    });
+
+    avg = sum / 20;
+    med = median(tempPrice);
+    posCng = Math.max.apply(null, tempDayChange);
+    negCng = Math.min.apply(null, tempDayChange);
+
+    var tr = document.createElement('tr');
+    tr.innerHTML += "<td>"+ roundToTwo(sum) +"</td>";
+    tr.innerHTML += "<td>"+ roundToTwo(avg) +"</td>";
+    tr.innerHTML += "<td>"+ roundToTwo(med) +"</td>";
+    tr.innerHTML += "<td>"+ negCng +"</td>";
+    tr.innerHTML += "<td>"+ posCng +"</td>";
+
+    document.getElementById('currencyStatistics').appendChild(tr);
+}
+
+function median(values) {
+
+    values.sort( function(a,b) {return a - b;} );
+
+    var half = Math.floor(values.length/2);
+
+    if(values.length % 2)
+        return values[half];
+    else
+        return (values[half-1] + values[half]) / 2.0;
+}
+
 function loadData() {
     fetchData();
     fetchAveragePrice();
     setData();
     loadTable();
+    setStatistics();
 }
 
 fetchExchangeRate();

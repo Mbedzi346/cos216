@@ -46,6 +46,13 @@ section {
     width: 45px;
 }
 
+caption {
+    font-size: 25pt;
+    color: white;
+    background-color: darkgrey;
+    margin-bottom: 10px;
+}
+
 td {
     text-align: center;
 }
