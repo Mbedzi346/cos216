@@ -8,10 +8,7 @@
     <title>CryptoLeak</title>
     <link rel="stylesheet" href="../style.css">
 </head>
-<body onload="loadData()">
-    <div id="loader">
-        <h1>LOADING...</h1>
-    </div>
+<body>
     <header class="flex-grid flex-align-center">
         <div class="col">
             <h1>CryptoLeak</h1>
@@ -32,44 +29,40 @@
         <a href="../under_construction.html" class="col">Assignment 5</a>
     </nav>
     <section>
-        <div class="flex-grid">
-            <input type="text" placeholder="Search..." onkeyup="searchTable()" id="searchBox" class="col box">
-            <input type="button" value="Refresh" class="box" onclick="loadData()">
-        </div>
         <div class="flex-grid box">
-            <table width="100%">
+            <table width="100%" class="col">
+                <caption><?=$_GET['name']?> - <?=$_GET['symbol']?></caption>
                 <thead>
                     <tr>
-                        <th>Logo</th>
+                        <th></th>
+                        <th>Price</th>
                         <th>Name</th>
-                        <th>Market Capitalization</th>
-                        <th>Price (R)</th>
-                        <th>Average Price (R)</th>
-                        <th>volume</th>
-                        <th>24/h Change</th>
+                        <th>URL</th>
                     </tr>
                 </thead>
-                <tbody id="currencyTable"></tbody>
-            </table>
-        </div>
-    </section>
-    <section>
-        <div class="flex-grid box">
-            <table width="100%">
-                <caption>Statistics</caption>
-                <thead>
+                <tbody>
                     <tr>
-                        <th>SUM</th>
-                        <th>AVG</th>
-                        <th>MED</th>
-                        <th>CNG (-)</th>
-                        <th>CNG (+)</th>
+                        <td rowspan="3">
+                            <img src="https://chasing-coins.com/api/v1/std/logo/<?=$_GET['symbol']?>" alt="Logo" width="100" height="100">
+                        </td>
+                        <td><?=$_GET['avg_name0']?></td>
+                        <td><a href="<?=$_GET['avg_url0']?>" target="_blank"><?=$_GET['avg_url0']?></a></td>
+                        <td><?=$_GET['avg_price0']?></td>
                     </tr>
-                </thead>
-                <tbody id="currencyStatistics"></tbody>
+                    <tr>
+                        <td><?=$_GET['avg_name1']?></td>
+                        <td><a href="<?=$_GET['avg_url1']?>" target="_blank"><?=$_GET['avg_url1']?></a></td>
+                        <td><?=$_GET['avg_price1']?></td>
+                    </tr>
+                    <tr>
+                        <td><?=$_GET['avg_name2']?></td>
+                        <td><a href="<?=$_GET['avg_url2']?>" target="_blank"><?=$_GET['avg_url2']?></a></td>
+                        <td><?=$_GET['avg_price2']?></td>
+                    </tr>
+
+                </tbody>
             </table>
         </div>
     </section>
-    <script src="main.js"></script>
 </body>
 </html>

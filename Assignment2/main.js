@@ -48,11 +48,48 @@ function fetchAveragePrice() {
 
         sendReq('https://api.cryptonator.com/api/ticker/'+value.symbol+'-usd', function (res) {
             value['avg_price1'] = JSON.parse(res).ticker.price;
+            value['avg_name1'] = 'cryptonator.com';
+            value['agv_url1'] = 'https://api.cryptonator.com/api/ticker/'+value.symbol+'-usd';
         });
 
         sendReq('https://min-api.cryptocompare.com/data/price?fsym='+value.symbol+'&tsyms=USD', function (res) {
             value['avg_price2'] = JSON.parse(res).USD;
+            value['avg_name2'] = 'cryptocompare.com';
+            value['avg_url2'] = 'https://min-api.cryptocompare.com/data/price?fsym='+value.symbol+'&tsyms=USD';
         });
+
+        value['avg_price0'] = value.price_usd;
+        value['avg_name0'] = 'coinmarketcap.com';
+        value['avg_url0'] = 'https://api.coinmarketcap.com/v1/ticker/'+value.id;
+    });
+}
+
+function showAvgDetails(symbol) {
+
+    window.theData.forEach(function (value) {
+        if (symbol === value.symbol) {
+
+            window.open(
+                window.location.origin+'/Assignment2/info.php' +
+                '?symbol=' + value.symbol +
+                '&name=' + value.name +
+
+                '&avg_name0=' + value.avg_name0 +
+                '&avg_url0='+ value.avg_url0 +
+                '&avg_price0=' + value.avg_price0 +
+
+                '&avg_name1=' + value.avg_name1 +
+                '&avg_url1='+ value.agv_url1 +
+                '&avg_price1=' + value.avg_price1 +
+
+
+                '&avg_name2=' + value.avg_name2 +
+                '&avg_url2=' + value.avg_url2 +
+                '&avg_price2=' + value.avg_price2,
+                '_blank'
+            );
+
+        }
     });
 }
 
@@ -60,6 +97,7 @@ function setData () {
     data = [];
     window.theData.forEach(function (value) {
         data.push({
+            symbol: value.symbol,
             logo: "https://chasing-coins.com/api/v1/std/logo/"+value.symbol,
             name: value.name,
             marketCap: value.market_cap_usd,
@@ -82,7 +120,7 @@ function loadTable () {
         tr.innerHTML += '<td><img src="'+value.logo+'" class="currency-logo"/></td>';
         tr.innerHTML += "<td>"+value.name+"</td>";
         tr.innerHTML += "<td>"+value.marketCap+" USD</td>";
-        tr.innerHTML += "<td>"+value.price+"</td>";
+        tr.innerHTML += '<td><a href="javascript:void(0)" onclick="showAvgDetails("'+value.symbol+'")">'+value.price+'</a></td>';
         tr.innerHTML += "<td>"+roundToTwo(computeAvg(value.price, value.avg_price1, value.avg_price2))+"</td>";
         tr.innerHTML += "<td>"+value.volume+"</td>";
         tr.innerHTML += "<td>"+value.fullDayChange+" %</td>";
@@ -183,4 +221,3 @@ function loadData() {
 }
 
 fetchExchangeRate();
-loadData();
