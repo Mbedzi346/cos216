@@ -120,7 +120,7 @@ function loadTable () {
         tr.innerHTML += '<td><img src="'+value.logo+'" class="currency-logo"/></td>';
         tr.innerHTML += "<td>"+value.name+"</td>";
         tr.innerHTML += "<td>"+value.marketCap+" USD</td>";
-        tr.innerHTML += '<td><a href="javascript:void(0)" onclick="showAvgDetails("'+value.symbol+'")">'+value.price+'</a></td>';
+        tr.innerHTML += '<td><a href="javascript:void(0)" onclick="showAvgDetails(\''+value.symbol.toString()+'\')">'+value.price+'</a></td>';
         tr.innerHTML += "<td>"+roundToTwo(computeAvg(value.price, value.avg_price1, value.avg_price2))+"</td>";
         tr.innerHTML += "<td>"+value.volume+"</td>";
         tr.innerHTML += "<td>"+value.fullDayChange+" %</td>";
