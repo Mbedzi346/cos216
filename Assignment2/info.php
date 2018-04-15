@@ -59,7 +59,6 @@
                         <td><a href="<?=$_GET['avg_url2']?>" target="_blank"><?=$_GET['avg_url2']?></a></td>
                         <td><?=$_GET['avg_price2']?></td>
                     </tr>
-
                 </tbody>
             </table>
         </div>
